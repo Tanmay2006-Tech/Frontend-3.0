@@ -1,96 +1,106 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
 interface Stat {
   label: string;
-  value: string;
+  value: number;
   unit: string;
 }
 
 const stats: Stat[] = [
-  { label: 'AVERAGE LATENCY', value: '5', unit: 'ms' },
-  { label: 'EFFICIENCY GAIN', value: '4', unit: 'x' },
-  { label: 'COST REDUCTION', value: '48', unit: '%' },
+  { label: 'AVERAGE LATENCY', value: 5, unit: 'ms' },
+  { label: 'EFFICIENCY GAIN', value: 4, unit: 'x' },
+  { label: 'COST REDUCTION', value: 48, unit: '%' },
 ];
 
 function Counter({ target, unit }: { target: number; unit: string }) {
   const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isInView) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          let current = 0;
+          const duration = 2000;
+          const steps = 60;
+          const stepValue = target / steps;
+          const stepDuration = duration / steps;
 
-    const duration = 2000;
-    const steps = 60;
-    const stepDuration = duration / steps;
-    const increment = target / steps;
+          const interval = setInterval(() => {
+            current += stepValue;
+            if (current >= target) {
+              setCount(target);
+              clearInterval(interval);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, stepDuration);
+        }
+      },
+      { threshold: 0.3, once: true }
+    );
 
-    let current = 0;
-    const interval = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(interval);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, stepDuration);
-
-    return () => clearInterval(interval);
-  }, [isInView, target]);
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target, hasAnimated]);
 
   return (
-    <div ref={ref} className="text-6xl font-bold stat-bracket">
+    <div ref={ref} className="text-6xl md:text-7xl font-light stat-bracket">
       {count}
-      {unit}
+      <span className="text-4xl ml-1">{unit}</span>
     </div>
   );
 }
 
 export function Statistics() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
   return (
     <section className="py-16 md:py-24 px-6 md:px-12 bg-background grid md:grid-cols-12 gap-8 md:gap-12">
-      <motion.div
+      <div
         className="md:col-span-4 flex flex-col gap-4"
-        variants={itemVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        style={{
+          animation: 'slideInUp 0.8s ease-out',
+        }}
       >
         <p className="text-label-mono text-primary">PLATFORM PERFORMANCE</p>
         <h2 className="text-headline-md max-w-xs">Engineered for absolute speed.</h2>
-      </motion.div>
+      </div>
 
-      <motion.div
+      <div
         className="md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-end"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        style={{
+          animation: 'slideInUp 0.8s ease-out 0.2s both',
+        }}
       >
-        {stats.map((stat) => (
-          <motion.div key={stat.label} className="stat-container" variants={itemVariants}>
-            <Counter target={parseInt(stat.value)} unit={stat.unit} />
+        {stats.map((stat, i) => (
+          <div
+            key={stat.label}
+            className="stat-container"
+            style={{
+              animation: `slideInUp 0.8s ease-out ${0.2 + i * 0.1}s both`,
+            }}
+          >
+            <Counter target={stat.value} unit={stat.unit} />
             <p className="text-label-mono mt-4 text-on-surface-variant">{stat.label}</p>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
+
+      <style jsx>{`
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }

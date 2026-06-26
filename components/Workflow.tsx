@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 interface WorkflowFeature {
   number: string;
   title: string;
@@ -32,26 +30,11 @@ const features: WorkflowFeature[] = [
 ];
 
 export function Workflow() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
   return (
     <section className="py-16 md:py-24 bg-background px-6 md:px-12">
-      <motion.div
+      <div
         className="mb-12 md:mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-12"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        style={{ animation: 'slideInUp 0.8s ease-out' }}
       >
         <div>
           <p className="text-label-mono text-primary mb-4">CANVAS ENGINE</p>
@@ -60,113 +43,171 @@ export function Workflow() {
         <div className="max-w-md text-on-surface-variant text-body-md">
           Our node-based architecture allows you to drag-and-drop complex AI logic without touching a single line of code.
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
+      <div
         className="relative w-full h-96 md:h-96 border border-outline-variant/30 bg-[#0c0c0c] rounded mb-12 overflow-hidden"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        style={{ animation: 'slideInUp 0.8s ease-out 0.2s both' }}
       >
         <div className="absolute inset-0 blueprint-grid opacity-20"></div>
 
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 400">
           <path d="M100 200 L 400 100 L 700 200 L 400 300 Z" fill="none" stroke="#555" strokeDasharray="4 4" strokeWidth="1"></path>
-          <motion.path
+          <path
             d="M150 200 H 300 V 120 H 450"
             fill="none"
             stroke="white"
             strokeWidth="1"
-            initial={{ strokeDashoffset: 1000 }}
-            whileInView={{ strokeDashoffset: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2, delay: 0.2 }}
             strokeDasharray="1000"
-          ></motion.path>
-          <motion.path
+            style={{
+              animation: 'drawPath 2s ease-out 0.4s forwards',
+            }}
+          ></path>
+          <path
             d="M150 200 H 300 V 280 H 450"
             fill="none"
             stroke="white"
             strokeWidth="1"
-            initial={{ strokeDashoffset: 1000 }}
-            whileInView={{ strokeDashoffset: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2, delay: 0.4 }}
             strokeDasharray="1000"
-          ></motion.path>
+            style={{
+              animation: 'drawPath 2s ease-out 0.6s forwards',
+            }}
+          ></path>
         </svg>
 
         {/* Trigger Node */}
-        <motion.div
+        <div
           className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 p-6 border border-white bg-background z-10 w-48"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          style={{
+            animation: 'slideInLeft 0.6s ease-out',
+          }}
         >
           <div className="text-label-mono text-primary mb-2">TRIGGER</div>
           <div className="font-bold">Email Inbound</div>
           <div className="mt-4 flex gap-2">
-            <motion.span className="w-2 h-2 rounded-full bg-green-500" animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }} />
+            <span
+              className="w-2 h-2 rounded-full bg-green-500"
+              style={{
+                animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              }}
+            />
             <span className="text-xs text-on-surface-variant">Listening...</span>
           </div>
-        </motion.div>
+        </div>
 
         {/* AI Node 1 */}
-        <motion.div
+        <div
           className="absolute left-64 md:left-96 top-16 md:top-24 p-6 border border-outline-variant/50 bg-background z-10 w-48"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          style={{
+            animation: 'slideInUp 0.6s ease-out 0.2s both',
+          }}
         >
           <div className="text-label-mono text-primary mb-2">AI AGENT</div>
           <div className="font-bold">Sentiment Scan</div>
           <div className="mt-4 h-1 w-full bg-outline-variant"></div>
-        </motion.div>
+        </div>
 
         {/* AI Node 2 */}
-        <motion.div
+        <div
           className="absolute left-64 md:left-96 bottom-16 md:bottom-24 p-6 border border-outline-variant/50 bg-background z-10 w-48"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          style={{
+            animation: 'slideInDown 0.6s ease-out 0.3s both',
+          }}
         >
           <div className="text-label-mono text-primary mb-2">AI AGENT</div>
           <div className="font-bold">Summary Gen</div>
           <div className="mt-4 h-1 w-full bg-outline-variant"></div>
-        </motion.div>
+        </div>
 
         {/* Output Node */}
-        <motion.div
+        <div
           className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 p-6 border border-outline-variant/50 bg-surface z-10 w-48 opacity-50"
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 0.5, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          style={{
+            animation: 'slideInRight 0.6s ease-out 0.4s both',
+          }}
         >
           <div className="text-label-mono text-gray-600 mb-2">DESTINATION</div>
           <div className="font-bold text-gray-600">CRM Sync</div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
-      <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-px border border-outline-variant/30 divide-x divide-outline-variant/30"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        {features.map((feature) => (
-          <motion.div key={feature.number} className="p-6 md:p-8" variants={itemVariants}>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-px border border-outline-variant/30 divide-x divide-outline-variant/30">
+        {features.map((feature, idx) => (
+          <div
+            key={feature.number}
+            className="p-6 md:p-8"
+            style={{
+              animation: `slideInUp 0.8s ease-out ${0.1 * idx}s both`,
+            }}
+          >
             <div className="text-label-mono text-xs mb-4 text-gray-600">{feature.number}</div>
             <h4 className="font-bold mb-2 text-headline-sm md:text-base">{feature.title}</h4>
             <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">{feature.description}</p>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
+
+      <style jsx>{`
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideInDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes drawPath {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+
+        @keyframes pulse {
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+      `}</style>
     </section>
   );
 }

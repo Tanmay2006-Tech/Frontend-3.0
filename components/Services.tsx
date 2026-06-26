@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 interface Service {
   title: string;
   description: string;
@@ -32,33 +30,16 @@ const services: Service[] = [
 ];
 
 export function Services() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
   return (
     <section className="border-y border-outline-variant/30 bg-background">
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-4 divide-x divide-outline-variant/30"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        {services.map((service) => (
-          <motion.div
+      <div className="grid grid-cols-1 md:grid-cols-4 divide-x divide-outline-variant/30">
+        {services.map((service, idx) => (
+          <div
             key={service.title}
             className="p-8 md:p-12 hover:bg-surface transition-colors duration-300 group cursor-pointer"
-            variants={itemVariants}
+            style={{
+              animation: `slideInUp 0.8s ease-out ${0.1 * idx}s both`,
+            }}
           >
             <div className="mb-8 w-12 h-12 flex items-center justify-center">
               <span className="material-symbols-outlined text-4xl text-white group-hover:text-primary transition-colors duration-300">
@@ -67,9 +48,22 @@ export function Services() {
             </div>
             <h3 className="text-headline-sm mb-4">{service.title}</h3>
             <p className="text-on-surface-variant text-sm leading-relaxed">{service.description}</p>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
+
+      <style jsx>{`
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }

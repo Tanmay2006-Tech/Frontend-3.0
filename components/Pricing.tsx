@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 interface PricingPlan {
@@ -56,31 +55,13 @@ export function Pricing() {
     return Math.round(annual * currencies[currency].multiplier);
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
   return (
     <section className="bg-light-bg text-light-text py-16 md:py-24 px-6 md:px-12" id="pricing">
-      <motion.div
-        className="text-center mb-16"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
+      <div className="text-center mb-16" style={{ animation: 'fadeIn 0.6s ease-out' }}>
         <p className="text-label-mono text-light-text/50 mb-4">INVESTMENT</p>
         <h2 className="text-display-lg md:text-5xl font-bold mb-12">Scalable Architecture Pricing</h2>
 
-        <motion.div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 bg-white/50 p-6 rounded border border-light-border inline-flex" whileInView={{ scale: [0.95, 1] }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 bg-white/50 p-6 rounded border border-light-border inline-flex" style={{ animation: 'slideUp 0.6s ease-out' }}>
           <div className="flex items-center gap-4">
             <span className="text-label-mono">MONTHLY</span>
             <label className="relative inline-flex items-center cursor-pointer">
@@ -98,27 +79,25 @@ export function Pricing() {
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>
             <option value="INR">INR</option>
-          </select>
-        </motion.div>
-      </motion.div>
+            </select>
+        </div>
+      </div>
 
-      <motion.div
+      <div
         className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        style={{ animation: 'slideUp 0.8s ease-out 0.2s both' }}
       >
-        {plans.map((plan) => (
-          <motion.div
+        {plans.map((plan, idx) => (
+          <div
             key={plan.name}
-            className={`p-8 md:p-12 border flex flex-col transition-all duration-300 ${
+            className={`p-8 md:p-12 border flex flex-col transition-all duration-300 hover:shadow-lg ${
               plan.highlighted
-                ? 'bg-light-text text-light-bg border-light-text transform md:scale-105 shadow-lg'
+                ? 'bg-light-text text-light-bg border-light-text md:scale-105 shadow-lg'
                 : 'bg-white border-light-border hover:border-light-text'
             }`}
-            variants={itemVariants}
-            whileHover={{ y: -4 }}
+            style={{
+              animation: `slideUp 0.8s ease-out ${0.2 + idx * 0.1}s both`,
+            }}
           >
             <div className={`text-label-mono text-xs mb-4 uppercase ${plan.highlighted ? 'text-light-bg' : 'text-light-text/50'}`}>
               {plan.name}
@@ -152,9 +131,31 @@ export function Pricing() {
             >
               {plan.highlighted ? 'UPGRADE NOW' : 'GET STARTED'}
             </button>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }

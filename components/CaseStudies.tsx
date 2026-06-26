@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 interface CaseStudy {
   number: string;
   company: string;
@@ -31,60 +29,55 @@ const caseStudies: CaseStudy[] = [
 ];
 
 export function CaseStudies() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
   return (
     <section className="bg-light-bg text-light-text py-16 md:py-24 px-6 md:px-12">
-      <motion.p
-        className="text-label-mono text-light-text/50 mb-12 md:mb-16"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
+      <p className="text-label-mono text-light-text/50 mb-12 md:mb-16" style={{ animation: 'fadeIn 0.6s ease-out' }}>
         DEPLOYED SOLUTIONS
-      </motion.p>
+      </p>
 
-      <motion.div
-        className="flex flex-col border-t border-light-border"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        {caseStudies.map((study) => (
-          <motion.div
+      <div className="flex flex-col border-t border-light-border">
+        {caseStudies.map((study, idx) => (
+          <div
             key={study.number}
             className="case-study-row py-8 border-b border-light-border grid grid-cols-1 md:grid-cols-12 items-center gap-4 md:gap-6 cursor-pointer hover:bg-white transition-colors duration-300 px-4 md:px-0"
-            variants={itemVariants}
-            whileHover={{ backgroundColor: 'rgba(255,255,255,0.5)' }}
+            style={{
+              animation: `slideInUp 0.8s ease-out ${0.1 * idx}s both`,
+            }}
           >
             <div className="md:col-span-1 text-light-text/50 text-label-mono text-xs">{study.number}</div>
             <div className="md:col-span-2">
-              <img
-                className="w-full h-24 object-cover grayscale"
-                src={study.image}
-                alt={study.company}
-              />
+              <img className="w-full h-24 object-cover grayscale" src={study.image} alt={study.company} />
             </div>
             <div className="md:col-span-2 font-bold text-headline-sm">{study.company}</div>
             <div className="md:col-span-5 text-label-mono text-sm leading-relaxed">{study.description}</div>
             <div className="md:col-span-2 flex justify-end">
               <span className="case-study-arrow material-symbols-outlined text-4xl">east</span>
             </div>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }

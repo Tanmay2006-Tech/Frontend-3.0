@@ -1,22 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-
 export function VideoShowcase() {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const buttonVariants = {
-    initial: { scale: 1 },
-    hover: { scale: 1.1 },
-    tap: { scale: 0.95 },
-  };
-
-  const circleVariants = {
-    initial: { scale: 1, opacity: 1 },
-    hover: { scale: 1.2, opacity: 0.8 },
-  };
-
   return (
     <section className="relative w-full min-h-screen bg-background overflow-hidden flex items-center justify-center">
       <div className="absolute inset-0 noise-overlay z-20"></div>
@@ -28,26 +12,30 @@ export function VideoShowcase() {
         />
       </div>
       <div className="relative z-30 h-full flex flex-col items-center justify-center gap-6">
-        <motion.button
-          className="group flex flex-col items-center gap-4 transition-all active:scale-95 cursor-pointer"
-          onHoverStart={() => setIsHovered(true)}
-          onHoverEnd={() => setIsHovered(false)}
-          variants={buttonVariants}
-          initial="initial"
-          whileHover="hover"
-          whileTap="tap"
+        <button
+          className="group flex flex-col items-center gap-4 transition-all hover:scale-110 active:scale-95 cursor-pointer"
           aria-label="Play video"
+          style={{ animation: 'slideUp 0.8s ease-out' }}
         >
-          <motion.div
-            className="w-24 h-24 rounded-full border border-white flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:bg-white group-hover:text-black transition-all duration-300"
-            variants={circleVariants}
-            animate={isHovered ? 'hover' : 'initial'}
-          >
+          <div className="w-24 h-24 rounded-full border border-white flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:bg-white group-hover:text-black transition-all duration-300">
             <span className="material-symbols-outlined text-5xl">play_arrow</span>
-          </motion.div>
+          </div>
           <span className="text-label-mono tracking-wider font-bold">PLAY VIDEO</span>
-        </motion.button>
+        </button>
       </div>
+
+      <style jsx>{`
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }
