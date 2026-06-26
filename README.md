@@ -157,7 +157,7 @@ pnpm start
 │   ├── pricing.ts            # Pricing logic & types
 │   └── utils.ts              # Tailwind cn() function
 ├── public/
-│   └── icons/                # SVG icons
+│   └── icons/                # SVG
 └── package.json              # Dependencies
 ```
 
