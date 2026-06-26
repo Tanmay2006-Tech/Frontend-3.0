@@ -17,7 +17,7 @@ export function VideoShowcase() {
           aria-label="Play video"
           style={{ animation: 'slideUp 0.8s ease-out' }}
         >
-          <div className="w-24 h-24 rounded-full border border-white flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:bg-white group-hover:text-black transition-all duration-300">
+          <div className="w-24 h-24 rounded-full border border-white flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:bg-white group-hover:text-black transition-all duration-300 animate-pulse-glow">
             <span className="material-symbols-outlined text-5xl">play_arrow</span>
           </div>
           <span className="text-label-mono tracking-wider font-bold">PLAY VIDEO</span>

@@ -60,7 +60,7 @@ export function Workflow() {
             strokeWidth="1"
             strokeDasharray="1000"
             style={{
-              animation: 'drawPath 2s ease-out 0.4s forwards',
+              animation: 'drawPath 2.5s ease-out 0.4s forwards, pulse-line 2s ease-in-out 2.9s infinite',
             }}
           ></path>
           <path
@@ -77,9 +77,9 @@ export function Workflow() {
 
         {/* Trigger Node */}
         <div
-          className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 p-6 border border-white bg-background z-10 w-48"
+          className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 p-6 border border-white bg-background z-10 w-48 hover:border-primary hover:shadow-lg hover:shadow-white/20 transition-all duration-300"
           style={{
-            animation: 'slideInLeft 0.6s ease-out',
+            animation: 'slideInLeft 0.6s ease-out, pulse-node 3s ease-in-out 1s infinite',
           }}
         >
           <div className="text-label-mono text-primary mb-2">TRIGGER</div>
@@ -97,7 +97,7 @@ export function Workflow() {
 
         {/* AI Node 1 */}
         <div
-          className="absolute left-64 md:left-96 top-16 md:top-24 p-6 border border-outline-variant/50 bg-background z-10 w-48"
+          className="absolute left-64 md:left-96 top-16 md:top-24 p-6 border border-outline-variant/50 bg-background z-10 w-48 hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
           style={{
             animation: 'slideInUp 0.6s ease-out 0.2s both',
           }}
@@ -109,7 +109,7 @@ export function Workflow() {
 
         {/* AI Node 2 */}
         <div
-          className="absolute left-64 md:left-96 bottom-16 md:bottom-24 p-6 border border-outline-variant/50 bg-background z-10 w-48"
+          className="absolute left-64 md:left-96 bottom-16 md:bottom-24 p-6 border border-outline-variant/50 bg-background z-10 w-48 hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
           style={{
             animation: 'slideInDown 0.6s ease-out 0.3s both',
           }}
@@ -121,7 +121,7 @@ export function Workflow() {
 
         {/* Output Node */}
         <div
-          className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 p-6 border border-outline-variant/50 bg-surface z-10 w-48 opacity-50"
+          className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 p-6 border border-outline-variant/50 bg-surface z-10 w-48 opacity-50 hover:opacity-100 hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
           style={{
             animation: 'slideInRight 0.6s ease-out 0.4s both',
           }}
@@ -205,6 +205,43 @@ export function Workflow() {
           }
           50% {
             opacity: 0.5;
+          }
+        }
+
+        @keyframes drawPath {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+
+        @keyframes slideInDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes pulse-node {
+          0%, 100% {
+            box-shadow: 0 0 0 0 rgba(201, 198, 197, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 0 8px rgba(201, 198, 197, 0);
+          }
+        }
+
+        @keyframes pulse-line {
+          0%, 100% {
+            stroke-width: 1;
+            opacity: 1;
+          }
+          50% {
+            stroke-width: 2;
+            opacity: 0.7;
           }
         }
       `}</style>

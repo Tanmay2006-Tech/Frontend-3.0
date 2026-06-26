@@ -41,8 +41,8 @@ export function Services() {
               animation: `slideInUp 0.8s ease-out ${0.1 * idx}s both`,
             }}
           >
-            <div className="mb-8 w-12 h-12 flex items-center justify-center">
-              <span className="material-symbols-outlined text-4xl text-white group-hover:text-primary transition-colors duration-300">
+            <div className="mb-8 w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span className="material-symbols-outlined text-4xl text-white group-hover:text-primary transition-colors duration-300 group-hover:animate-pulse-glow">
                 {service.icon}
               </span>
             </div>

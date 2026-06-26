@@ -37,7 +37,7 @@ export function Hero() {
             className="flex items-center gap-6 mt-4"
             style={{ animation: 'slideInUp 0.8s ease-out 0.4s both' }}
           >
-            <button className="text-label-mono border border-white px-10 py-5 text-white hover:bg-white hover:text-black active:scale-95 transition-all duration-300">
+            <button className="text-label-mono border border-white px-10 py-5 text-white hover:bg-white hover:text-black active:scale-95 transition-all duration-300 hover:shadow-lg hover:shadow-white/30">
               BUILD A WORKFLOW
             </button>
           </div>

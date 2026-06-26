@@ -90,10 +90,10 @@ export function Pricing() {
         {plans.map((plan, idx) => (
           <div
             key={plan.name}
-            className={`p-8 md:p-12 border flex flex-col transition-all duration-300 hover:shadow-lg ${
+            className={`p-8 md:p-12 border flex flex-col transition-all duration-300 hover:shadow-xl ${
               plan.highlighted
-                ? 'bg-light-text text-light-bg border-light-text md:scale-105 shadow-lg'
-                : 'bg-white border-light-border hover:border-light-text'
+                ? 'bg-light-text text-light-bg border-light-text md:scale-105 shadow-lg hover:scale-110'
+                : 'bg-white border-light-border hover:border-light-text hover:scale-105'
             }`}
             style={{
               animation: `slideUp 0.8s ease-out ${0.2 + idx * 0.1}s both`,
@@ -116,7 +116,7 @@ export function Pricing() {
                   key={feature.text}
                   className={`flex items-center gap-3 text-sm ${feature.included ? '' : plan.highlighted ? 'text-light-bg/50' : 'text-light-text/50'}`}
                 >
-                  <span className="material-symbols-outlined text-sm">{feature.included ? 'check' : 'close'}</span>
+                  <span className={`material-symbols-outlined text-sm ${feature.included ? 'animate-pulse-glow' : ''}`}>{feature.included ? 'check' : 'close'}</span>
                   {feature.text}
                 </li>
               ))}
